@@ -11,21 +11,22 @@ app = Flask(__name__)
 # register our blueprint
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     """perform cleanup when app is shutdown"""
     storage.close()
 
+
 if __name__ == "__main__":
     try:
         host_conn = os.getenv("HBNB_API_HOST")
-        if host_conn == None:
+        if host_conn is None:
             host_conn = "0.0.0.0"
         port_conn = os.getenv("HBNB_API_PORT")
-        if port_conn == None:
+        if port_conn is None:
             port_conn = 5000
-    except:
+    except Exception:
         pass
     print(app.url_map)
     app.run(host=host_conn, port=port_conn, threaded=True)
-   
