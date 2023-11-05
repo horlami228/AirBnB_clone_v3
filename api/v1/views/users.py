@@ -67,7 +67,7 @@ def delete_user(user_id):
 @app_views.route("/users/<string:user_id>",
                  methods=["PUT"], strict_slashes=False)
 def update_user(user_id):
-    """update an existing state instance by id"""
+    """update an existing User instance by id"""
 
     if not request.get_json():
         abort(400, "Not a JSON")
@@ -75,7 +75,7 @@ def update_user(user_id):
     if user is None:
         abort(404)
     data = request.get_json()
-    """ update the state object with key-value pairs"""
+    """ update the User object with key-value pairs"""
     for key, value in data.items():
         if key not in ["id", "email", "created_at", "updated_at"]:
             setattr(user, key, value)
