@@ -39,7 +39,8 @@ def create_state():
         return responseObject
 
 
-@app_views.route("/states/<string:state_id>", methods=["GET"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>",
+                 methods=["GET"], strict_slashes=True)
 def get_one_state(state_id):
     """get one state instance by id"""
     state = storage.get(State, state_id)
@@ -48,7 +49,8 @@ def get_one_state(state_id):
     return make_response(jsonify(state.to_dict()), 200)
 
 
-@app_views.route("/states/<string:state_id>", methods=["DELETE"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>",
+                 methods=["DELETE"], strict_slashes=True)
 def delete_state(state_id):
     """delete object from storage"""
     state = storage.get(State, state_id)    # get object by id
@@ -60,7 +62,8 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/states/<string:state_id>", methods=["PUT"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>",
+                 methods=["PUT"], strict_slashes=True)
 def update_state(state_id):
     """update an existing state instance by id"""
 
