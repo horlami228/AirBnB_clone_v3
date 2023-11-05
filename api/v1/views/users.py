@@ -80,4 +80,4 @@ def update_user(user_id):
         if key not in ["id", "email", "created_at", "updated_at"]:
             setattr(user, key, value)
     storage.save()
-    return make_response(jsonify(User.to_dict()), 200)
+    return make_response(jsonify(user.to_dict()), 200)
