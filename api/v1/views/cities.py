@@ -12,13 +12,12 @@ from models import storage
                  methods=["GET"], strict_slashes=False)
 def get_all_cities(state_id):
     """get all cities by state id"""
-    all_city = storage.all(City)
-    filtered_city = [city.to_dict() for city in all_city.values()
-                     if city.state_id == state_id]
-    if len(filtered_city) == 0:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
 
-    return jsonify(filtered_city), 200
+    associated_city = [object.to_dict() for object in state.cities]
+    return jsonify(associated_city), 200
 
 
 @app_views.route("/cities/<string:city_id>", strict_slashes=False)
@@ -31,7 +30,7 @@ def get_one_city(city_id):
 
 
 @app_views.route("/cities/<string:city_id>",
-                 methods=["DELETE"], strict_slashes=True)
+                 methods=["DELETE"], strict_slashes=False)
 def delete_city(city_id):
     """delete object from storage"""
     city = storage.get(City, city_id)    # get object by id
