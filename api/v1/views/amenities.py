@@ -51,9 +51,9 @@ def get_one_amenity(amenity_id):
 
 @app_views.route("/amenities/<string:amenity_id>",
                  methods=["DELETE"], strict_slashes=True)
-def delete_amenity(state_id):
+def delete_amenity(amenity_id):
     """delete object from storage"""
-    amenity = storage.get(Amenity, state_id)    # get object by id
+    amenity = storage.get(Amenity, amenity_id)    # get object by id
     if amenity is None:
         abort(404)
 
@@ -64,12 +64,12 @@ def delete_amenity(state_id):
 
 @app_views.route("/amenities/<string:amenity_id>",
                  methods=["PUT"], strict_slashes=True)
-def update_amenity(state_id):
+def update_amenity(amenity_id):
     """update an existing state instance by id"""
 
     if not request.get_json():
         abort(400, "Not a JSON")
-    amenity = storage.get(Amenity, state_id)    # get object by id
+    amenity = storage.get(Amenity, amenity_id)    # get object by id
     if amenity is None:
         abort(404)
     data = request.get_json()
