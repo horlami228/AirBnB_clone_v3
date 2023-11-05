@@ -39,7 +39,7 @@ def create_state():
         return responseObject
 
 
-@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>", methods=["GET"], strict_slashes=True)
 def get_one_state(state_id):
     """get one state instance by id"""
     state = storage.get(State, state_id)
@@ -48,7 +48,7 @@ def get_one_state(state_id):
     return make_response(jsonify(state.to_dict()), 200)
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>", methods=["DELETE"], strict_slashes=True)
 def delete_state(state_id):
     """delete object from storage"""
     state = storage.get(State, state_id)    # get object by id
@@ -60,16 +60,15 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=True)
+@app_views.route("/states/<string:state_id>", methods=["PUT"], strict_slashes=True)
 def update_state(state_id):
     """update an existing state instance by id"""
 
+    if not request.get_json():
+        abort(400, "Not a JSON")
     state = storage.get(State, state_id)    # get object by id
     if state is None:
         abort(404)
-
-    if not request.get_json():
-        abort(400, "Not a JSON")
     data = request.get_json()
     """ update the state object with key-value pairs"""
     for key, value in data.items():
@@ -77,5 +76,5 @@ def update_state(state_id):
             continue
         else:
             setattr(state, key, value)
-
+    storage.save()
     return make_response(jsonify(state.to_dict()), 200)
