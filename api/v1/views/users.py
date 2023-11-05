@@ -42,7 +42,7 @@ def create_User():
 
 
 @app_views.route("/users/<string:user_id>",
-                 methods=["GET"], strict_slashes=True)
+                 methods=["GET"], strict_slashes=False)
 def get_one_user(user_id):
     """get one User instance by id"""
     user = storage.get(User, user_id)
@@ -52,7 +52,7 @@ def get_one_user(user_id):
 
 
 @app_views.route("/users/<string:user_id>",
-                 methods=["DELETE"], strict_slashes=True)
+                 methods=["DELETE"], strict_slashes=False)
 def delete_user(user_id):
     """delete object from storage"""
     user = storage.get(User, user_id)    # get object by id
@@ -65,7 +65,7 @@ def delete_user(user_id):
 
 
 @app_views.route("/users/<string:user_id>",
-                 methods=["PUT"], strict_slashes=True)
+                 methods=["PUT"], strict_slashes=False)
 def update_user(user_id):
     """update an existing state instance by id"""
 
