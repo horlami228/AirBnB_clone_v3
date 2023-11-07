@@ -5,9 +5,11 @@ from flask import Flask, jsonify
 from models import storage
 import os
 from api.v1.views import app_views
+from flask_cors import CORS
 
 # initialize a new flask application
 app = Flask(__name__)
+CORS(app, resources={"/*": {"origins": "0.0.0.0"}})   # enable CORS in flask
 # register our blueprint
 app.register_blueprint(app_views)
 
@@ -33,5 +35,4 @@ if __name__ == "__main__":
             port_conn = 5000
     except Exception:
         pass
-    print(app.url_map)
     app.run(host=host_conn, port=port_conn, threaded=True)
